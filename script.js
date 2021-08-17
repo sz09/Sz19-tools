@@ -7,6 +7,16 @@ function generate(){
   var value = text;
   setValueToHideInput(value);
   copyToClipboard();
+  successToast();
+}
+
+function successToast(){
+  $.toast({
+    heading: 'Information',
+    text: 'Copied to clipboard',
+    showHideTransition: 'slide',
+    icon: 'info'
+});
 }
 
 function setValueToHideInput(value){
