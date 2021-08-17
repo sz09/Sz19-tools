@@ -43,7 +43,7 @@ function successToast(title, value){
 	  stack: true,
           fullscreen:false,
           timeout:4000,
-          sticky:true,
+          sticky:false,
           has_progress:true,
           rtl:false,
     });
