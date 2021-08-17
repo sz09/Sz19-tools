@@ -1,3 +1,6 @@
 body{
-  background-color: pink;
+    background-image: url('spider-man.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: space;
 }
