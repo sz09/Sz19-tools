@@ -15,8 +15,8 @@ function successToast(){
   $.Toast("Information", "Copied to clipboard!", "success", {
           has_icon:true,
           has_close_btn:true,
-					stack: true,
-          fullscreen:true,
+	  stack: true,
+          fullscreen:false,
           timeout:4000,
           sticky:false,
           has_progress:true,
