@@ -24,18 +24,19 @@
       </header>
       <div class="row col-md-12 text-left">  
         <div class="inner cover col-md-3">
-          <label for="type" class="cover-heading hight-light">Type</label>
-          <select id="type" class="form-select" aria-label="Default select example">
+          <label for="type" class="cover-heading hight-light-label">Type</label>
+          <select id="type" class="form-control" aria-label="Default select example">
             <option value="features">Feature</option>
             <option value="bugs">Bug</option>
           </select>
         </div> 
         <div class="inner cover col-md-7">
-          <label for="inputString" class="cover-heading hight-light">Your text.</label>
+          <label for="inputString" class="cover-heading hight-light-label">Your text.</label>
           <input type="text" class="form-control" id="inputString" placeholder="Enter your task.">
         </div>
         <div class="inner cover col-md-2">
-            <button type="button" class="btn btn-outline-dark" onclick="generate()">Generate</button>
+          <label for="inputString" class="cover-heading hight-light-label"></label>
+          <button type="button" class="btn btn-light" onclick="generate()">Generate</button>
         </div>
       </div>
         
