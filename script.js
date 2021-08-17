@@ -12,7 +12,7 @@ function generate(){
 }
 
 function getBranchName(text){
-  var regex = new RegExp(/[^a-zA-Z0-9]/g);
+  var regex = new RegExp(/[^a-zA-Z0-9#]/g);
   text = $('#type').val() + '/' + text.replace(regex, '_');
   return text;
 }
