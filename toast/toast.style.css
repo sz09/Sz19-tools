@@ -2,7 +2,7 @@
 @font-face {
   font-family: 'toast';
   src: url("assets/fonts/toast.eot?76tjxy");
-  src: url("assets/fonts/toast.eot?76tjxy#iefix") format("embedded-opentype"), url("assets/fonts/toast.ttf?76tjxy") format("truetype"), url("assets/fonts/toast.woff?76tjxy") format("woff"), url("assets/fonts/toast.svg?76tjxy#toast") format("svg");
+  src: url("assets/fonts/toast.eot?76tjxy#iefix") format("embedded-opentype"), url("assets/fonts/toast.ttf?76tjxy") format("truetype"), url("../toast.woff?76tjxy") format("woff"), url("assets/fonts/toast.svg?76tjxy#toast") format("svg");
   font-weight: normal;
   font-style: normal; }
 
