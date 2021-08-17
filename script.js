@@ -9,7 +9,7 @@ function generate(){
   value = keep1Underscore(value);
   setValueToHideInput(value);
   copyToClipboard();
-  successToast(value);
+  copiedToast(value);
 }
 
 function getBranchName(text){
@@ -22,18 +22,6 @@ function keep1Underscore(text){
   return text.replace(new RegExp(/[_]{2,}/g), '_');
 }
 
-function successToast(value){
-  $.Toast("Copied", value, "success", {
-          has_icon:true,
-          has_close_btn:true,
-	  stack: true,
-          fullscreen:false,
-          timeout:4000,
-          sticky:false,
-          has_progress:true,
-          rtl:false,
-    });
-}
 
 function setValueToHideInput(value){
    $(hideInput).val(value);
@@ -42,4 +30,21 @@ function setValueToHideInput(value){
 function copyToClipboard(){
     $(hideInput).select();      
     document.execCommand("copy");
+}
+
+function copiedToast(value){
+  successToast("Copied", value);
+}
+
+function successToast(title, value){
+  $.Toast(title, value, "success", {
+          has_icon:true,
+          has_close_btn:true,
+	  stack: true,
+          fullscreen:false,
+          timeout:4000,
+          sticky:true,
+          has_progress:true,
+          rtl:false,
+    });
 }
