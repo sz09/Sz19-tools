@@ -14,7 +14,7 @@ function generate(){
 function successToast(){
   $.toast({
     heading: 'Information',
-    text: 'Copied to clipboard',
+    text: 'Copied to clipboard!',
     showHideTransition: 'slide',
     icon: 'info'
   });
