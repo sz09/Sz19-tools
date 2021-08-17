@@ -18,7 +18,7 @@ function getBranchName(text){
 }
 
 function successToast(value){
-  $.Toast("Information", `Copied to clipboard! ${value}`, "success", {
+  $.Toast("Copied", value, "success", {
           has_icon:true,
           has_close_btn:true,
 	  stack: true,
