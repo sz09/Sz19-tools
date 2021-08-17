@@ -5,10 +5,15 @@ function generate(){
     return;
   }
   
-  var value = text;
+  var value = getBranchName(text);
   setValueToHideInput(value);
   copyToClipboard();
   successToast();
+}
+
+function getBranchName(text){
+  var regex = new RegExp(/[^a-zA-Z0-9]/g);
+  return text.replace(regex, '_');
 }
 
 function successToast(){
