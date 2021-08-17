@@ -4,6 +4,7 @@ function generate(){
   if(!text){
     return;
   }
+  
   var value = text;
   setValueToHideInput(value);
   copyToClipboard();
@@ -16,14 +17,14 @@ function successToast(){
     text: 'Copied to clipboard',
     showHideTransition: 'slide',
     icon: 'info'
-});
+  });
 }
 
 function setValueToHideInput(value){
    $(hideInput).val(value);
 }
 
-funtion copyToClipboard(){
+function copyToClipboard(){
     $(hideInput).select();      
     document.execCommand("copy");
 }
