@@ -17,6 +17,10 @@ function getBranchName(text){
   return text;
 }
 
+function keep1Underscore(text){
+  return text.replace(new RegExp(/[_]{2,}/g), '_');
+}
+
 function successToast(value){
   $.Toast("Copied", value, "success", {
           has_icon:true,
