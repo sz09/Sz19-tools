@@ -8,7 +8,7 @@ function generate(){
   var value = getBranchName(text);
   setValueToHideInput(value);
   copyToClipboard();
-  successToast();
+  successToast(value);
 }
 
 function getBranchName(text){
@@ -16,8 +16,8 @@ function getBranchName(text){
   return text.replace(regex, '_');
 }
 
-function successToast(){
-  $.Toast("Information", "Copied to clipboard!", "success", {
+function successToast(value){
+  $.Toast("Information", `Copied to clipboard! ${value}`, "success", {
           has_icon:true,
           has_close_btn:true,
 	  stack: true,
