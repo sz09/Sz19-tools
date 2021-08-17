@@ -16,17 +16,24 @@
 
   <body class="text-center">
     <input id="linkToCopy" value="TEXT TO COPY" style="position: absolute; z-index: -999; opacity: 0;" />
-    <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <div class="d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
         <h1 class="cover-heading">Render branch name</h1>
         </div>
       </header>
-
-      <main role="main" class="inner cover">
+       
+       <div class="inner cover col-md-3">
+        <h3 class="cover-heading">Select a type</h3>
+        <select class="form-select" aria-label="Default select example">
+          <option value="features">Feature</option>
+          <option value="bugs">Bug</option>
+        </select>
+      </div> 
+      <div class="inner cover col-md-8">
         <h3 class="cover-heading">Enter your task.</h3>
         <input type="text" class="form-control" id="inputString" placeholder="Enter your task.">
-      </main>
+      </div>
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
