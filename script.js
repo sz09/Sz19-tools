@@ -6,6 +6,7 @@ function generate(){
   }
   
   var value = getBranchName(text);
+  value = keep1Underscore(value);
   setValueToHideInput(value);
   copyToClipboard();
   successToast(value);
