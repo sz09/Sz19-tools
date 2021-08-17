@@ -1,6 +1,6 @@
 var hideInput = '#linkToCopy';
 function generate(){
-  var text = $('#inputString').val();
+  var text = $('#inputString').val().trim();
   if(!text){
     return;
   }
