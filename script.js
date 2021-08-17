@@ -13,7 +13,8 @@ function generate(){
 
 function getBranchName(text){
   var regex = new RegExp(/[^a-zA-Z0-9]/g);
-  return text.replace(regex, '_');
+  text = $('#type').val() + '/' + text.replace(regex, '_');
+  return text;
 }
 
 function successToast(value){
