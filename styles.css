@@ -6,5 +6,7 @@ body{
 }
 .hight-light-label{
     display: block;
-    min-height: 23px;
+    min-height: 27px;
+    font-size: 19px;
+    font-style: italic;
 }
