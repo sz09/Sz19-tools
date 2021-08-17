@@ -12,12 +12,16 @@ function generate(){
 }
 
 function successToast(){
-  $.toast({
-    heading: 'Information',
-    text: 'Copied to clipboard!',
-    showHideTransition: 'slide',
-    icon: 'info'
-  });
+  $.Toast("Information", "Copied to clipboard!", "success", {
+          has_icon:true,
+          has_close_btn:true,
+					stack: true,
+          fullscreen:true,
+          timeout:4000,
+          sticky:false,
+          has_progress:true,
+          rtl:false,
+    });
 }
 
 function setValueToHideInput(value){
