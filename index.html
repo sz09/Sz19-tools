@@ -19,25 +19,28 @@
     <div class="d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="row col-md-12">
-            <button type="button" class="btn btn-primary hight-light-label tool-name" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
         </div>
       </header>
-      <div class="row col-md-12 text-left collapse show" id="render-branch-name">  
-        <div class="inner cover col-md-3">
-          <label for="type" class="cover-heading hight-light-label">Type</label>
-          <select id="type" class="form-control" aria-label="Default select example">
-            <option value="features">Feature</option>
-            <option value="bugs">Bug</option>
-          </select>
-        </div> 
-        <div class="inner cover col-md-7">
-          <label for="inputString" class="cover-heading hight-light-label">Your text.</label>
-          <input type="text" class="form-control" id="inputString" placeholder="Enter your task.">
-        </div>
-        <div class="inner cover col-md-2">
-          <label for="inputString" class="cover-heading hight-light-label"></label>
-          <button type="button" class="btn btn-light" onclick="generate()">Generate</button>
-        </div>
+        
+      <div class="collapse show" id="render-branch-name">
+          <div class="row col-md-12 text-left">  
+            <div class="inner cover col-md-3">
+              <label for="type" class="cover-heading hight-light-label">Type</label>
+              <select id="type" class="form-control" aria-label="Default select example">
+                <option value="features">Feature</option>
+                <option value="bugs">Bug</option>
+              </select>
+            </div> 
+            <div class="inner cover col-md-7">
+              <label for="inputString" class="cover-heading hight-light-label">Your text.</label>
+              <input type="text" class="form-control" id="inputString" placeholder="Enter your task.">
+            </div>
+            <div class="inner cover col-md-2">
+              <label for="inputString" class="cover-heading hight-light-label"></label>
+              <button type="button" class="btn btn-light" onclick="generate()">Generate</button>
+            </div>
+          </div>
       </div>
         
       <footer class="mastfoot mt-auto">
