@@ -20,6 +20,7 @@
       <header class="masthead mb-auto">
         <div class="row col-md-12">
             <button type="button" class="btn btn-primary" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
+            <button type="button" class="btn btn-primary" data-toggle="collapse" href="#reminder" role="button" aria-expanded="true" aria-controls="reminder">Reminder</button>
         </div>
       </header>
         
@@ -63,6 +64,20 @@
           </div>
       </div>
         
+      <div class="row col-md-12 text-left collapse show" id="reminder">
+          <div class="row col-md-12">  
+            <div class="inner cover col-md-12">
+              <button id="addRow" class="btn btn-light">Add</button>
+              <table id="reminderTable">
+                <tr>
+                  <th>Time</th>
+                  <th>Message</th>
+                  <th>Actions</th>
+                </tr>
+              </table>
+            </div>
+          </div>
+      </div>
       <footer class="mastfoot mt-auto">
       </footer>
     </div>
@@ -74,6 +89,173 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="toast/toast.script.js"></script>
-  <script src="script.js" crossorigin="anonymous"></script>
+  <script>
+    let timeout;
+    let hideInput = '#linkToCopy';
+    const regex = new RegExp(/[^a-zA-Z0-9#]/g);
+    function handleChange() {
+      if(timeout){
+        clearTimeout(timeout);
+      }
+      
+      timeout = setTimeout(() => {
+        generate();
+      }, 300)
+    }
+    function generate(){
+      let inputString = $('#inputString').val().trim();
+      let sprint = $('#sprintString').val().trim();
+      let user = $('#user').val().trim();
+      let text = 'Sprint' + sprint + '/' + user + '/' + inputString;
+      if(!text){
+        return;
+      }
+      
+      let value = getBranchName(text);
+      
+      value = keep1Underscore(value);
+      setValueToHideInput(value);
+      $('#outputString').text(value);
+      copy();
+    }
+
+    function copy()
+    {
+      copyToClipboard();
+      copiedToast($(hideInput).val());
+    }
+    function getBranchName(text){
+      text = $('#type').val() + '/' + text.replace(regex, '_');
+      return text;
+    }
+
+    function keep1Underscore(text){
+      return text.replace(new RegExp(/[_]{2,}/g), '_');
+    }
+
+
+    function setValueToHideInput(value){
+      $(hideInput).val(value);
+    }
+
+    function copyToClipboard(){
+        $(hideInput).select();      
+        document.execCommand("copy");
+    }
+
+    function copiedToast(value){
+      successToast("Copied", value);
+    }
+
+    function successToast(title, value){
+      $.Toast(title, value, "success", {
+              has_icon:true,
+              has_close_btn:true,
+        stack: true,
+              fullscreen:false,
+              timeout:4000,
+              sticky:false,
+              has_progress:true,
+              rtl:false,
+        });
+    }
+  </script>
+
+  <script>
+    Notification.requestPermission();
+
+    const table = document.getElementById("reminderTable");
+
+    // State management
+    const reminders = []; 
+    let reminderCounter = 0;
+
+    function addRow() {
+      const id = reminderCounter++;
+
+      const tr = document.createElement("tr");
+      tr.dataset.id = id;
+
+      tr.innerHTML = `
+        <td><input type="datetime-local" class="time"></td>
+        <td><input type="text" class="msg" placeholder="Reminder message..."></td>
+        <td>
+          <button class="addBtn btn btn-sm btn-light">Add</button>
+          <button class="removeBtn btn btn-sm btn-light">Remove</button>
+        </td>
+      `;
+
+      const addBtn = tr.querySelector(".addBtn");
+      const removeBtn = tr.querySelector(".removeBtn");
+
+      addBtn.addEventListener("click", () => activateReminder(id, tr));
+      removeBtn.addEventListener("click", () => removeReminder(id, tr));
+
+      table.appendChild(tr);
+    }
+
+    function activateReminder(id, tr) {
+      const time = tr.querySelector(".time").value;
+      const msg = tr.querySelector(".msg").value;
+
+      if (!time || !msg) {
+        alert("Please fill in both time and message.");
+        return;
+      }
+
+      const target = new Date(time).getTime();
+      const now = Date.now();
+
+      if (target <= now) {
+        alert("Time must be in the future.");
+        return;
+      }
+
+      const timeout = target - now;
+
+      const timeoutId = setTimeout(() => {
+        new Notification("Reminder", { body: msg });
+        reminders[id].active = false;
+      }, timeout);
+
+      reminders[id] = {
+        id,
+        active: true,
+        timeoutId,
+        message: msg,
+        time: time,
+      };
+
+      tr.classList.add("active");
+      tr.querySelector(".addBtn").disabled = true;
+    }
+
+    function removeReminder(id, tr) {
+      const r = reminders[id];
+
+      if (r && r.active) {
+        clearTimeout(r.timeoutId);
+      }
+
+      reminders[id] = { active: false };
+
+      tr.classList.add("removed");
+      tr.querySelector(".addBtn").disabled = true;
+      tr.querySelector(".removeBtn").disabled = true;
+    }
+
+    // Prevent closing tab if any active reminders
+    window.addEventListener("beforeunload", (e) => {
+      const hasActive = reminders.some(r => r && r.active);
+      if (hasActive) {
+        e.preventDefault();
+        e.returnValue = "";
+      }
+    });
+
+    // Add initial row
+    document.getElementById("addRow").addEventListener("click", addRow);
+    addRow();
+  </script>
 </body>
 </html>
