@@ -205,7 +205,7 @@
       const removeBtn = tr.querySelector(".removeBtn");
 
       addBtn.addEventListener("click", () => activateReminder(id, tr));
-      removeBtn.addEventListener("click", () => removeReminder(id, tr));
+      removeBtn.addEventListener("click", () => removeReminders(id, tr));
 
       table.appendChild(tr);
     }
@@ -260,6 +260,21 @@
 
       tr.classList.add("active");
       tr.querySelector(".addBtn").disabled = true;
+    }
+
+    function removeReminders(id, tr) {
+      const r = reminders[id].filter(d => d.id == id);
+      for(let d of r) {
+        if(d.active){
+          clearTimeout(d.timeoutId);
+          d.active = false;
+        }
+      }
+      if(reminders[id].filter(d => d.id == id && d.active).length == 0){
+        tr.classList.add("removed");
+        tr.querySelector(".addBtn").disabled = true;
+        tr.querySelector(".removeBtn").disabled = true;
+      }
     }
 
     function removeReminder(id, tr, timeoutId) {
