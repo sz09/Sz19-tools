@@ -71,7 +71,7 @@
               <table id="reminderTable">
                 <tr>
                   <th>Time</th>
-                  <th>Message</th>
+                  <th style="width: 1000px;">Message</th>
                   <th>Actions</th>
                 </tr>
               </table>
@@ -177,8 +177,8 @@
       tr.dataset.id = id;
 
       tr.innerHTML = `
-        <td><input type="datetime-local" class="time"></td>
-        <td><input type="text" class="msg" placeholder="Reminder message..."></td>
+        <td><input type="datetime-local" class="time form-control"></td>
+        <td><input type="text" width="500px" class="msg form-control" placeholder="Reminder message..."></td>
         <td>
           <button class="addBtn btn btn-sm btn-light">Add</button>
           <button class="removeBtn btn btn-sm btn-light">Remove</button>
