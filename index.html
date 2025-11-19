@@ -216,6 +216,7 @@
       const timeoutId = setTimeout(() => {
         new Notification("Reminder", { body: msg });
         reminders[id].active = false;
+        emoveReminder(id, tr);
       }, timeout);
 
       reminders[id] = {
