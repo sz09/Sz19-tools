@@ -1,19 +1,38 @@
-var hideInput = '#linkToCopy';
+let timeout;
+let hideInput = '#linkToCopy';
+const regex = new RegExp(/[^a-zA-Z0-9#]/g);
+function handleChange() {
+  if(timeout){
+    clearTimeout(timeout);
+  }
+  
+  timeout = setTimeout(() => {
+    generate();
+  }, 300)
+}
 function generate(){
-  var text = $('#inputString').val().trim();
+  let inputString = $('#inputString').val().trim();
+  let sprint = $('#sprintString').val().trim();
+  let user = $('#user').val().trim();
+  let text = 'Sprint' + sprint + '/' + user + '/' + inputString;
   if(!text){
     return;
   }
   
-  var value = getBranchName(text);
+  let value = getBranchName(text);
+  
   value = keep1Underscore(value);
   setValueToHideInput(value);
-  copyToClipboard();
-  copiedToast(value);
+  $('#outputString').text(value);
+  copy();
 }
 
+function copy()
+{
+  copyToClipboard();
+  copiedToast($(hideInput).val());
+}
 function getBranchName(text){
-  var regex = new RegExp(/[^a-zA-Z0-9#]/g);
   text = $('#type').val() + '/' + text.replace(regex, '_');
   return text;
 }

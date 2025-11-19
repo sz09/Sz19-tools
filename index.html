@@ -16,7 +16,7 @@
 
   <body>
     <input id="linkToCopy" value="" style="position: absolute; z-index: -999; opacity: 0;" />
-    <div class="d-flex h-100 p-3 mx-auto flex-column">
+    <div class="h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="row col-md-12">
             <button type="button" class="btn btn-primary" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
@@ -26,19 +26,39 @@
       <div class="row col-md-12 text-left collapse show" id="render-branch-name">
           <div class="row col-md-12">  
             <div class="inner cover col-md-3">
+              <label for="user" class="cover-heading hight-light-label">User Id</label>
+              <input type="text" class="form-control" value="PPH011" id="user" placeholder="User Id">
+            </div>
+            
+            <div class="inner cover col-md-2">
+              <label for="sprintString" class="cover-heading hight-light-label">Sprint</label>
+              <input type="text" class="form-control" id="sprintString" placeholder="Sprint">
+            </div>
+          </div>
+          <div class="row col-md-12">  
+            <div class="inner cover col-md-3">
               <label for="type" class="cover-heading hight-light-label">Type</label>
               <select id="type" class="form-control" aria-label="Default select example">
                 <option value="features">Feature</option>
                 <option value="bugs">Bug</option>
               </select>
-            </div> 
-            <div class="inner cover col-md-8">
+            </div>
+            <div class="inner cover col-md-9">
               <label for="inputString" class="cover-heading hight-light-label">Task/bug name</label>
-              <input type="text" class="form-control" id="inputString" placeholder="Enter your task/bug name">
+              <input type="text" class="form-control" id="inputString" onchange="handleChange()" placeholder="Enter your task/bug name">
+            </div>
+          </div>
+          
+          <div class="row col-md-12"> 
+            <div class="inner cover col-md-3">
+            </div>
+            <div class="inner cover col-md-8">
+              <label class="cover-heading hight-light-label"></label>
+              <label id="outputString" class="form-control">
             </div>
             <div class="inner cover col-md-1">
-              <label for="inputString" class="cover-heading hight-light-label"></label>
-              <button type="button" class="btn btn-light" onclick="generate()">Generate</button>
+              <label class="cover-heading hight-light-label"></label>
+              <button type="button" class="btn btn-light" onclick="copy()">Copy</button>
             </div>
           </div>
       </div>
