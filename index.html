@@ -19,12 +19,12 @@
     <div class="h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="row col-md-12">
-            <button type="button" class="btn btn-primary" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
-            <button type="button" class="btn btn-primary" data-toggle="collapse" href="#reminder" role="button" aria-expanded="true" aria-controls="reminder">Reminder</button>
+            <button type="button" class="btn btn-primary mr-2" data-toggle="collapse" href="#render-branch-name" role="button" aria-expanded="true" aria-controls="render-branch-name">Render branch name</button>
+            <button type="button" class="btn btn-primary mr-2" data-toggle="collapse" href="#reminder" role="button" aria-expanded="true" aria-controls="reminder">Reminder</button>
         </div>
       </header>
         
-      <div class="row col-md-12 text-left collapse show" id="render-branch-name">
+      <div class="row col-md-12 mt-2 text-left collapse show" id="render-branch-name">
           <div class="row col-md-12">  
             <div class="inner cover col-md-3">
               <label for="user" class="cover-heading hight-light-label">User Id</label>
@@ -64,10 +64,26 @@
           </div>
       </div>
         
-      <div class="row col-md-12 text-left collapse show" id="reminder">
+      <div class="row col-md-12 mt-2 text-left collapse" id="reminder">
           <div class="row col-md-12">  
+            <div class="inner cover col-md-1">
+              <label for="addRow" class="cover-heading hight-light-label"></label>
+              <button id="addRow" class="btn btn-light mr-2">Add</button>
+            </div>
+            <div class="inner cover col-md-1">
+              <label for="checkbox" class="cover-heading hight-light-label">Repeat ?</label>
+              <input type="checkbox" id="checkbox" class="form-control" checked>
+            </div>
+            <div class="inner cover col-md-1">
+              <label for="repeatAfter" class="cover-heading hight-light-label">Mins</label>
+              <input type="number" id="repeatAfter" class="form-control" min="0" value="3" >
+            </div>
+            <div class="inner cover col-md-1">
+              <label for="times" class="cover-heading hight-light-label">Times</label>
+              <input type="number" id="times" class="form-control" min="" value="3">
+            </div>
             <div class="inner cover col-md-12">
-              <button id="addRow" class="btn btn-light">Add</button>
+              <audio id="reminderSound" src="Soft-high-tech-notification-sound-effect.mp3" preload="auto"></audio>
               <table id="reminderTable">
                 <tr>
                   <th>Time</th>
@@ -203,51 +219,67 @@
         return;
       }
 
-      const target = new Date(time).getTime();
-      const now = Date.now();
+      let target = new Date(time);
+      const targetTicks = target.getTime();
+      const now = new Date();
+      const nowTicks = now.getTime()
 
-      if (target <= now) {
+      if (targetTicks <= nowTicks) {
         alert("Time must be in the future.");
         return;
       }
+      let mins = $('#checkbox').val() === 'on' ? $('#repeatAfter').val() * 1 : 0;
+      let times =$('#checkbox').val() === 'on' ? $('#times').val() * 1 : 0;
+      for(let i = 0; i < 1 + times; i++){
+        let newMin = i * mins;
+        let cloneTime = new Date(target);
+        cloneTime.setMinutes(cloneTime.getMinutes() + newMin);
+        
+        const timeout = cloneTime.getTime() - now;
 
-      const timeout = target - now;
-
-      const timeoutId = setTimeout(() => {
-        new Notification("Reminder", { body: msg });
-        reminders[id].active = false;
-        removeReminder(id, tr);
-      }, timeout);
-
-      reminders[id] = {
-        id,
-        active: true,
-        timeoutId,
-        message: msg,
-        time: time,
-      };
+        const timeoutId = setTimeout(() => {
+          new Notification("Reminder", { body: msg });
+          reminders[id].active = false;
+          const audio = document.getElementById("reminderSound");
+          audio.currentTime = 0; // reset
+          audio.volume = 0.3;
+          audio.play();
+          removeReminder(id, tr, timeoutId);
+        }, timeout);
+        if(!reminders[id]){
+          reminders[id] = [];
+        }
+        reminders[id].push({
+          id: id,
+          active: true,
+          timeoutId: timeoutId,
+          message: msg,
+          time: time,
+        });
+      }
 
       tr.classList.add("active");
       tr.querySelector(".addBtn").disabled = true;
     }
 
-    function removeReminder(id, tr) {
-      const r = reminders[id];
-
-      if (r && r.active) {
-        clearTimeout(r.timeoutId);
+    function removeReminder(id, tr, timeoutId) {
+      const r = reminders[id].filter(d => d.id == id && d.timeoutId == timeoutId);
+      for(let d of r) {
+        if(d.active){
+          clearTimeout(d.timeoutId);
+          d.active = false;
+        }
       }
-
-      reminders[id] = { active: false };
-
-      tr.classList.add("removed");
-      tr.querySelector(".addBtn").disabled = true;
-      tr.querySelector(".removeBtn").disabled = true;
+      if(reminders[id].filter(d => d.id == id && d.active).length == 0){
+        tr.classList.add("removed");
+        tr.querySelector(".addBtn").disabled = true;
+        tr.querySelector(".removeBtn").disabled = true;
+      }
     }
 
     // Prevent closing tab if any active reminders
     window.addEventListener("beforeunload", (e) => {
-      const hasActive = reminders.some(r => r && r.active);
+      const hasActive = reminders.flat(1).some(r => r && r.active);
       if (hasActive) {
         e.preventDefault();
         e.returnValue = "";
