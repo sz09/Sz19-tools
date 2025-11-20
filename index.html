@@ -28,18 +28,18 @@
           <div class="row col-md-12">  
             <div class="inner cover col-md-3">
               <label for="user" class="cover-heading hight-light-label">User Id</label>
-              <input type="text" class="form-control" value="PPH011" id="user" placeholder="User Id">
+              <input type="text" class="form-control" value="PPH011" id="user" onchange="handleChange()" placeholder="User Id">
             </div>
             
             <div class="inner cover col-md-2">
               <label for="sprintString" class="cover-heading hight-light-label">Sprint</label>
-              <input type="text" class="form-control" id="sprintString" placeholder="Sprint">
+              <input type="text" class="form-control" id="sprintString" onchange="handleChange()" placeholder="Sprint">
             </div>
           </div>
           <div class="row col-md-12">  
             <div class="inner cover col-md-3">
               <label for="type" class="cover-heading hight-light-label">Type</label>
-              <select id="type" class="form-control" aria-label="Default select example">
+              <select id="type" class="form-control" aria-label="Default select example" onchange="handleChange()">
                 <option value="features">Feature</option>
                 <option value="bugs">Bug</option>
               </select>
@@ -132,7 +132,6 @@
       value = keep1Underscore(value);
       setValueToHideInput(value);
       $('#outputString').text(value);
-      copy();
     }
 
     function copy()
